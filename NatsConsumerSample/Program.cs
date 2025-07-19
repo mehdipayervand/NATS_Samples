@@ -1,0 +1,27 @@
+﻿using NATS.Net;
+using SharedLibray;
+
+namespace NatsConsumerSample;
+
+class Program
+{
+    static async Task Main(string[] args)
+    {
+        var url = "nats://127.0.0.1:4222";
+
+        await using var natsClient = new NatsClient(url);
+
+        Console.WriteLine("Waiting for messages...");
+        var cts = new CancellationTokenSource();
+        var subscriptionTask = Task.Run(async () =>
+        {
+            await foreach (var msg in natsClient.SubscribeAsync<Order>("orders.>", cancellationToken: cts.Token))
+            {
+                var order = msg.Data;
+                Console.WriteLine($"Subscriber received {msg.Subject}: {order}");
+            }
+
+            Console.WriteLine("Unsubscribed");
+        }, cts.Token);
+    }
+}
