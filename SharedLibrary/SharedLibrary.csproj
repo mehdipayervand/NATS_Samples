@@ -7,8 +7,4 @@
         <RootNamespace>SharedLibrary</RootNamespace>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Folder Include="Constans\" />
-    </ItemGroup>
-
 </Project>
