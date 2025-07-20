@@ -1,5 +1,5 @@
 ﻿using NATS.Net;
-using SharedLibray;
+using SharedLibrary;
 
 namespace NatsProducerSample;
 
@@ -9,8 +9,7 @@ class Program
     {
         var cts = new CancellationTokenSource();
 
-        var url = "nats://127.0.0.1:4222";
-        await using var natsClient = new NatsClient(url);
+        await using var natsClient = new NatsClient(Constants.NatsUrl);
 
         for (int i = 1; i < 501; i++)
         {

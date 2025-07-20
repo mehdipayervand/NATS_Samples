@@ -1,5 +1,5 @@
 ﻿using NATS.Net;
-using SharedLibray;
+using SharedLibrary;
 
 namespace NatsConsumerSample;
 
@@ -7,9 +7,7 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        var url = "nats://127.0.0.1:4222";
-
-        await using var natsClient = new NatsClient(url);
+        await using var natsClient = new NatsClient(Constants.NatsUrl);
 
         Console.WriteLine("Waiting for messages...");
         var cts = new CancellationTokenSource();

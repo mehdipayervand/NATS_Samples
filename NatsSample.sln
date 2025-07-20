@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NatsProducerSample", "NatsP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NatsConsumerSample", "NatsConsumerSample\NatsConsumerSample.csproj", "{AD149389-5910-4A85-9A22-CE9CEEACC13C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedLibray", "SharedLibray\SharedLibray.csproj", "{995CE729-2BF8-4DDB-AA11-86C18A190B40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedLibrary", "SharedLibrary\SharedLibrary.csproj", "{995CE729-2BF8-4DDB-AA11-86C18A190B40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
