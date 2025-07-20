@@ -1,7 +1,7 @@
   
   
-  #install home brew
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+ #install home brew
+ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   
 #install home NATS/CLI
 brew install nats-io/nats-tools/nats
@@ -37,3 +37,77 @@ $nats reply  "hello.*" --command "echo 'Hello, {{1}} from A'" --sleep 1s --queue
 $ nats req hello.jeremy "Hello?" --count=-1
 
 $ nats sub ">"
+
+
+#include jeststream
+
+$ nats server run --jetstream
+$ nats context select nats_development
+
+$ nats stream ls
+
+~$ nats stream add
+[nats_development] ? Stream Name orders
+[nats_development] ? Subjects [? for help] orders.*
+Q: Retention Policy???????
+$ nats pub orders.us "{{.Count}}" --count 1000
+$ nats pub orders.eu "{{.Count}}" --count 1000
+$ nats sub --stream orders 
+$ nats sub --stream orders --all
+$ nats sub --stream orders --new
+$ nats sub --stream orders --last
+$ nats sub --stream orders --last-per-subject orders.us
+$ nats sub --stream orders --start-sequence=995
+$ nats sub  "orders.*" --durable my_consumer
+
+
+
+$ nats consumer create
+[nats_development] ? Select a Stream orders
+[nats_development] ? Consumer name pull_consumer
+[nats_development] ? Delivery target (empty for Pull Consumers) 
+[nats_development] ? Start policy (all, new, last, subject, 1h, msg sequence) all
+[nats_development] ? Acknowledgment policy explicit
+[nats_development] ? Replay policy instant
+[nats_development] ? Filter Stream by subjects (blank for all) 
+[nats_development] ? Maximum Allowed Deliveries -1
+[nats_development] ? Maximum Acknowledgments Pending 0
+[nats_development] ? Deliver headers only without bodies No
+[nats_development] ? Add a Retry Backoff Policy No
+Information for Consumer orders > pull_consumer created 2025-07-20 15:54:25
+
+$ nats consumer next orders pull_consumer --count=1000
+
+$ nats consumer info
+
+
+
+
+$ nats kv add mybucket
+$ nats kv add --help
+$ nats kv put mybucket foo bar
+$ nats kv gett mybucket foo
+
+$ nats kv watch mybucket
+$ nats kv put mybucket foo bat
+
+$ nats object add videos
+$ nats object put videos VideoSample.mp4
+
+$ watch nats stream ls -a
+
+
+
+#stream ourcing
+$ nats stream add
+[nats_development] ? Stream Name returns
+[nats_development] ? Subjects returns.*
+...
+
+$ nats pub returns.us "{{.Count}}" --count 1000
+$ nats pub returns.eu "{{.Count}}" --count 1000
+
+$ nats stream add --source returns --source orders
+
+
+$ nats sub --stream archive_eu
