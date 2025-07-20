@@ -1,0 +1,39 @@
+  
+  
+  #install home brew
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  
+#install home NATS/CLI
+brew install nats-io/nats-tools/nats
+  
+nats server run
+
+# requst reply
+#     create consumer
+nats reply hello.jeremy "Hi"
+
+# create a request
+nats req hello.jeremy ""
+
+$ nats sub hello.world
+$ nays pub hello.world "hello world!"
+OR
+$ nats pub hello.world "hello, world" --count=-1 --sleep=1s
+
+
+$nats sub hello.world --queue greeter
+$nats pub hello.world "hello world" --count 1000
+
+#wild cards
+$nats sub orders.*.create
+$nats sun hello.>
+$nats sun >
+
+$nats reply "hello.*" --command "echo 'Hello, {{1}}'" --sleep 1s
+$nats req hello.jeremy ""
+
+scalling
+$nats reply  "hello.*" --command "echo 'Hello, {{1}} from A'" --sleep 1s --queue greeter
+$ nats req hello.jeremy "Hello?" --count=-1
+
+$ nats sub ">"
