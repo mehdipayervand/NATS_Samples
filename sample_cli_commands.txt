@@ -26,8 +26,8 @@ $nats pub hello.world "hello world" --count 1000
 
 #wild cards
 $nats sub orders.*.create
-$nats sun hello.>
-$nats sun >
+$nats sub hello.>
+$nats sub >
 
 $nats reply "hello.*" --command "echo 'Hello, {{1}}'" --sleep 1s
 $nats req hello.jeremy ""
@@ -98,7 +98,7 @@ $ watch nats stream ls -a
 
 
 
-#stream ourcing
+#stream sourcing or stream mirror
 $ nats stream add
 [nats_development] ? Stream Name returns
 [nats_development] ? Subjects returns.*
