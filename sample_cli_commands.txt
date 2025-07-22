@@ -18,13 +18,14 @@ brew install nats-io/nats-tools/nats
   
 nats server run
 
+============================================================
 # requst reply
-#     create consumer
+# create consumer
 nats reply hello.jeremy "Hi"
 
 # create a request
 nats req hello.jeremy ""
-
+============================================================
 $ nats sub hello.world
 $ nays pub hello.world "hello world!"
 OR
@@ -42,12 +43,15 @@ $nats sub >
 $nats reply "hello.*" --command "echo 'Hello, {{1}}'" --sleep 1s
 $nats req hello.jeremy ""
 
-scalling
+============================================================
+
+#scalling
 $nats reply  "hello.*" --command "echo 'Hello, {{1}} from A'" --sleep 1s --queue greeter
 $ nats req hello.jeremy "Hello?" --count=-1
 
 $ nats sub ">"
 
+============================================================
 
 #include jeststream
 
@@ -71,7 +75,6 @@ $ nats sub --stream orders --start-sequence=995
 $ nats sub  "orders.*" --durable my_consumer
 
 
-
 $ nats consumer create
 [nats_development] ? Select a Stream orders
 [nats_development] ? Consumer name pull_consumer
@@ -90,9 +93,6 @@ $ nats consumer next orders pull_consumer --count=1000
 
 $ nats consumer info
 
-
-
-
 $ nats kv add mybucket
 $ nats kv add --help
 $ nats kv put mybucket foo bar
@@ -106,7 +106,7 @@ $ nats object put videos VideoSample.mp4
 
 $ watch nats stream ls -a
 
-
+============================================================
 
 #stream sourcing or stream mirror
 $ nats stream add
@@ -121,3 +121,6 @@ $ nats stream add --source returns --source orders
 
 
 $ nats sub --stream archive_eu
+
+============================================================
+
