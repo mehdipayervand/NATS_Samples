@@ -16,7 +16,7 @@ https://github.com/nats-io/natscli
 #install home NATS/CLI
 brew install nats-io/nats-tools/nats
   
-nats server run
+nats server run --jetstream
 
 ============================================================
 # requst reply
@@ -27,7 +27,7 @@ nats reply hello.mehdi "Hi"
 nats req hello.mehdi ""
 ============================================================
 $ nats sub hello.world
-$ nays pub hello.world "hello world!"
+$ nats pub hello.world "hello world!"
 OR
 $ nats pub hello.world "hello, world" --count=-1 --sleep=1s
 
