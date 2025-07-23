@@ -21,10 +21,10 @@ nats server run
 ============================================================
 # requst reply
 # create consumer
-nats reply hello.jeremy "Hi"
+nats reply hello.mehdi "Hi"
 
 # create a request
-nats req hello.jeremy ""
+nats req hello.mehdi ""
 ============================================================
 $ nats sub hello.world
 $ nays pub hello.world "hello world!"
@@ -40,14 +40,19 @@ $nats sub orders.*.create
 $nats sub hello.>
 $nats sub >
 
+$ nats pub orders.us '{"id": 123, "status": "created"}'
+$ nats pub orders.eu '{"id": 123, "status": "delivered"}'
+
+
 $nats reply "hello.*" --command "echo 'Hello, {{1}}'" --sleep 1s
-$nats req hello.jeremy ""
+$nats req hello.mehdi ""
 
 ============================================================
 
 #scalling
-$nats reply  "hello.*" --command "echo 'Hello, {{1}} from A'" --sleep 1s --queue greeter
-$ nats req hello.jeremy "Hello?" --count=-1
+$ nats reply  "hello.*" --command "echo 'Hello, {{1}} from A'" --sleep 1s --queue greeter
+$ nats reply  "hello.*" --command "echo 'Hello, {{1}} from B'" --sleep 1s --queue greeter
+$ nats req hello.mehdi "Hello?" --count=-1
 
 $ nats sub ">"
 
@@ -64,16 +69,6 @@ $ nats stream ls
 [nats_development] ? Stream Name orders
 [nats_development] ? Subjects [? for help] orders.*
 Q: Retention Policy???????
-$ nats pub orders.us "{{.Count}}" --count 1000
-$ nats pub orders.eu "{{.Count}}" --count 1000
-$ nats sub --stream orders 
-$ nats sub --stream orders --all
-$ nats sub --stream orders --new
-$ nats sub --stream orders --last
-$ nats sub --stream orders --last-per-subject orders.us
-$ nats sub --stream orders --start-sequence=995
-$ nats sub  "orders.*" --durable my_consumer
-
 
 $ nats consumer create
 [nats_development] ? Select a Stream orders
@@ -90,6 +85,19 @@ $ nats consumer create
 Information for Consumer orders > pull_consumer created 2025-07-20 15:54:25
 
 $ nats consumer next orders pull_consumer --count=1000
+
+$ nats pub orders.us "{{.Count}}" --count 1000
+$ nats pub orders.eu "{{.Count}}" --count 1000
+
+$ nats consumer next orders pull_consumer --count=1000
+
+$ nats sub --stream orders 
+$ nats sub --stream orders --all
+$ nats sub --stream orders --new
+$ nats sub --stream orders --last
+$ nats sub --stream orders --last-per-subject orders.us
+$ nats sub --stream orders --start-sequence=995
+$ nats sub  "orders.*" --durable my_consumer
 
 $ nats consumer info
 
