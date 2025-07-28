@@ -11,20 +11,20 @@ https://github.com/nats-io/nats-server
 NATS-Cli
 https://github.com/nats-io/natscli
  #install home brew
- /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   
 #install home NATS/CLI
-brew install nats-io/nats-tools/nats
+$ brew install nats-io/nats-tools/nats
   
-nats server run --jetstream
+$ nats server run --jetstream
 
 ============================================================
 # requst reply
 # create consumer
-nats reply hello.mehdi "Hi"
+$ nats reply hello.mehdi "Hi"
 
 # create a request
-nats req hello.mehdi ""
+$ nats req hello.mehdi ""
 ============================================================
 $ nats sub hello.world
 $ nats pub hello.world "hello world!"
